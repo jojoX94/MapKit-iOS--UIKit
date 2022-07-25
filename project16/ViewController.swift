@@ -28,10 +28,15 @@ class ViewController: UIViewController, MKMapViewDelegate {
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-            let btn = UIButton(type: .detailDisclosure)
-            annotationView?.rightCalloutAccessoryView = btn
+            if let pinView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier) as? MKMarkerAnnotationView   {
+                pinView.markerTintColor = .gray
+                annotationView = pinView
+                annotationView?.tintColor = .green
+                annotationView?.canShowCallout = true
+                let btn = UIButton(type: .detailDisclosure)
+                annotationView?.rightCalloutAccessoryView = btn
+            }
+            
         } else {
             annotationView?.annotation = annotation
         }
